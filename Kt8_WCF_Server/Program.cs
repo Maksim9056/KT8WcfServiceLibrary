@@ -12,14 +12,13 @@ namespace Kt8_WCF_Server
     {
         static void Main(string[] args)
         {
-            using (ServiceHost host = new ServiceHost(typeof(OrderService), new Uri("http://localhost:8733/Design_Time_Addresses/KT8WcfServiceLibrary/OrderService/mx")))
+            using (ServiceHost host = new ServiceHost(typeof(OrderService), new Uri("http://192.168.1.110:85/Design_Time_Addresses/KT8WcfServiceLibrary/OrderService/mxs")))
             {
-                host.AddServiceEndpoint(typeof(IOrderService), new WSHttpBinding(), "");
+                host.AddServiceEndpoint(typeof(IOrderService), new BasicHttpBinding(), "");
                 host.Open();
                 Console.WriteLine("Sync Service is running...");
                 Console.ReadLine();
             }
-            
         }
     }
 }

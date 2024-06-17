@@ -5,6 +5,9 @@ using System.Linq;
 using System.ServiceModel;
 using System.Text;
 using System.Threading.Tasks;
+using System.Web.Services.Description;
+//using WcfService;
+//using Book = WcfService.Book;
 
 namespace KT8_Client
 {
@@ -17,7 +20,7 @@ namespace KT8_Client
             binding.Security.Mode = SecurityMode.Message;
             binding.Security.Message.ClientCredentialType =
             MessageCredentialType.Windows;
-            var factory = new ChannelFactory<IOrderService>(binding, new EndpointAddress("http://localhost:8733/Design_Time_Addresses/KT8WcfServiceLibrary/OrderService/mx"));
+            var factory = new ChannelFactory<IOrderService>(/*binding*/new BasicHttpBinding(), new EndpointAddress("http://www.examlab.pro:85/Design_Time_Addresses/KT8WcfServiceLibrary/OrderService/mxs"));
             var client = factory.CreateChannel();
 
             var Order1 = new Order
@@ -32,20 +35,21 @@ namespace KT8_Client
                         }
             };
             await client.AddOrderAsync(Order1);
-            List<string> list = new List<string>();
+            //List<string> list = new List<string>();
             //var S = list.FirstOrDefault();
-            //S.
-              //  List<string> list = new List<string>();
-              //   var S=     list.FirstOrDefault();
-              //var A = S.ToList();
-              //Получаем список всех заказов
+
+            //  List<string> list = new List<string>();
+            //   var S=     list.FirstOrDefault();
+            //var A = S.ToList();
+            //Получаем список всех заказов
               var asyncOrders = await client.GetOrdersAsync();
             foreach (var order in asyncOrders)
             {
                 Console.WriteLine($"Order ID: {order.OrderId}, Customer Name: {order.CustomerName}, Order Date: {order.OrderDate}");
             }
+            //Service1 clients = new Service1();
 
-   
+            //clients.AddOrderAsync
             Console.WriteLine("\nAsync Client:\n");
             var asyncSingleOrder = await client.GetOrderByIdAsync(2);
                Console.WriteLine($"Single Order - ID: {asyncSingleOrder.OrderId}, Customer Name: {asyncSingleOrder.CustomerName}");
@@ -60,6 +64,7 @@ namespace KT8_Client
             book.BookId = 2;
             book.Author = "Пушкин";
             book.Title = "Горе от ума";
+
             await client.AddBookAsync(book);
 
 
